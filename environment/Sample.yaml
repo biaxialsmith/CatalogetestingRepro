@@ -1,0 +1,23 @@
+$schema: "1.0"
+
+tasks:
+  - name: winget
+    parameters:
+      package: "Microsoft.VisualStudioCode"
+      runAsUser: true
+
+  - name: git-clone
+    description: "Clone sample repo"
+    parameters:
+      repositoryUrl: "https://github.com/your-org/sample.git"
+      directory: "C:\\Workspaces"
+
+  - name: powershell
+    description: "Configure environment variables"
+    parameters:
+      command: |
+        $currentPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+        $angularPath = "$env:USERPROFILE\AppData\Roaming\npm"
+        $newPath = "$currentPath;$angularPath"
+        [System.Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+        Write-Output "Updated PATH: $newPath"
