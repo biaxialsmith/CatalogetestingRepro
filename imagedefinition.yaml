@@ -1,0 +1,25 @@
+# Team Customization Image Definition
+$schema: "1.0"
+
+name: "myVSDevBox"
+image: "MicrosoftWindowsDesktop_windows-ent-cpc_win11-21h2-ent-cpc-m365"
+
+buildProperties:
+  networkConnection: "my-westus3"   # optional
+
+tasks:
+  - name: winget
+    parameters:
+      package: GitHub.GitHubDesktop
+
+  - name: powershell
+    parameters:
+      command: |
+        Write-Output "Running setup script..."
+        Install-PackageProvider -Name NuGet -Force
+        Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+
+  - name: git-clone
+    parameters:
+      repositoryUrl: "https://github.com/your-org/your-repo.git"
+      directory: "C:\\Workspaces"
